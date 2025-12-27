@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Calendar, Eye, Search, Filter, X, ExternalLink } from 'lucide-react';
@@ -36,6 +37,26 @@ const News = () => {
   const [allNews, setAllNews] = useState<NewsItem[]>([]);
   const [categories, setCategories] = useState<string[]>(['ทั้งหมด']);
   const [isLoading, setIsLoading] = useState(true);
+  const location = useLocation();
+
+  // Scroll to top on mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  // Handle URL query params for deep linking
+  useEffect(() => {
+    if (allNews.length > 0) {
+      const params = new URLSearchParams(location.search);
+      const newsId = params.get('id');
+      if (newsId) {
+        const foundNews = allNews.find(n => n.id === newsId);
+        if (foundNews) {
+          handleNewsClick(foundNews);
+        }
+      }
+    }
+  }, [allNews, location.search]);
 
   useEffect(() => {
     fetchNews();
@@ -95,6 +116,7 @@ const News = () => {
   // Increment view count when opening news detail
   const handleNewsClick = async (news: NewsItem) => {
     setSelectedNews(news);
+    window.scrollTo(0, 0);
     // Increment view count
     try {
       await (supabase as any).rpc('increment_news_view', { news_id: news.id });
@@ -119,7 +141,11 @@ const News = () => {
         <div className="container-school section-padding">
           <Button
             variant="outline"
-            onClick={() => setSelectedNews(null)}
+            onClick={() => {
+              setSelectedNews(null);
+              window.history.pushState({}, '', '/news');
+              window.scrollTo(0, 0);
+            }}
             className="mb-8"
           >
             ← กลับ

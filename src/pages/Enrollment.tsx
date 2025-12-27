@@ -310,7 +310,7 @@ const Enrollment = () => {
                   <h2 className="text-3xl font-bold text-foreground mb-4">สมัครเรียนสำเร็จ!</h2>
                   <p className="text-muted-foreground mb-2">เราได้รับใบสมัครของคุณเรียบร้อยแล้ว</p>
                   <p className="text-muted-foreground mb-8">
-                    หมายเลขใบสมัคร: <span className="font-bold text-primary">ENR-2568-{Math.floor(Math.random() * 9000) + 1000}</span>
+                    หมายเลขใบสมัคร: <span className="font-bold text-primary">ENR-{settings.academic_year}-{Math.floor(Math.random() * 9000) + 1000}</span>
                   </p>
                   <div className="bg-secondary rounded-lg p-6 mb-8 text-left">
                     <h3 className="font-semibold mb-4">ขั้นตอนถัดไป:</h3>
@@ -337,13 +337,13 @@ const Enrollment = () => {
           {/* Header */}
           <div className="text-center border-b-2 border-black pb-2 mb-3">
             <h1 className="text-lg font-bold">ใบสมัครเข้าเรียน</h1>
-            <h2 className="text-base font-semibold">{settings?.school_name || 'โรงเรียน'} ปีการศึกษา 2568</h2>
+            <h2 className="text-base font-semibold">{settings?.school_name || 'โรงเรียน'} ปีการศึกษา {settings.academic_year}</h2>
           </div>
 
           {/* Top Row: Info + Photo */}
           <div className="flex justify-between mb-3">
             <div>
-              <p><strong>เลขที่ใบสมัคร:</strong> ENR-2568-____</p>
+              <p><strong>เลขที่ใบสมัคร:</strong> ENR-{settings.academic_year}-____</p>
               <p><strong>วันที่สมัคร:</strong> {new Date().toLocaleDateString('th-TH', { day: 'numeric', month: 'short', year: 'numeric' })}</p>
               <p className="mt-2"><strong>สมัครเข้าชั้น:</strong> {formData.enrollLevel} <strong>แผน:</strong> {programLabel}</p>
             </div>
@@ -477,7 +477,7 @@ const Enrollment = () => {
             สมัครเรียนออนไลน์
           </h1>
           <p className="text-card/80 text-lg max-w-2xl mx-auto mb-6">
-            ปีการศึกษา 2568 | รับสมัครนักเรียนชั้น ม.1 และ ม.4
+            ปีการศึกษา {settings.academic_year} | รับสมัครนักเรียนชั้น ม.1 และ ม.4
           </p>
 
           {/* Search existing admission */}
@@ -558,7 +558,7 @@ const Enrollment = () => {
                         <body>
                           <div class="header">
                             <h1>ใบสมัครเข้าเรียน</h1>
-                            <h2>${settings?.school_name || 'โรงเรียน'} ปีการศึกษา 2568</h2>
+                            <h2>${settings?.school_name || 'โรงเรียน'} ปีการศึกษา ${settings.academic_year}</h2>
                           </div>
                           <div class="top-row">
                             <div>
